@@ -1,0 +1,27 @@
+GET http://localhost:5500/save
+
+###
+
+POST http://localhost:5500/transfer
+Content-Type: application/json
+
+{
+  "cardFromNumber": "3333333333333333",
+  "cardFromValidTill": "05/30",
+  "cardFromCVV": "333",
+  "cardToNumber": "2222222222222222",
+  "amount": {
+    "value": "2700000",
+    "currency": "RUR"
+  }
+}
+
+###
+
+POST http://localhost:5500/confirmOperation
+Content-Type: application/json
+
+{
+  "operationId": "2",
+  "code": "0000"
+}

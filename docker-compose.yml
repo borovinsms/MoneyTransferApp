@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+
+  server:
+    container_name: money-sharing-server
+    image: money-sharing-server:1.0
+
+    ports:
+      - "${SERVER_PORT}:5500"
+    environment:
+      - PATH_CARDS_FILE=/files/cards.json
+      - PATH_TRANSACTION_FILE=/files/transactions.json
+      - PATH_LOG_FILE=/files/log.txt
+      - ORIGIN_HOSTS=${ORIGIN_HOSTS}
+      - VERIFICATION_CODE=${VERIFICATION_CODE}
+      - TRANSFER_FEE=${TRANSFER_FEE}
+      - CARD_SIZE=${CARD_SIZE}
+      - CVV_SIZE=${CVV_SIZE}
+      - DATE_VALID_TILL_SIZE=${DATE_VALID_TILL_SIZE}
+    volumes:
+      - ${VOLUME}:/files
+    build:
+      context: Server
+
+
+  client:
+    container_name: money-sharing-client
+    image: money-sharing-client:1.0
+    ports:
+      - "${CLIENT_PORT}:3000"
+    build:
+      context: WebClient
+    depends_on:
+      - server
